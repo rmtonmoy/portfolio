@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rezwan Mahmud — CS PhD @ UGA</title>
+  <meta name="description" content="Rezwan Mahmud — PhD Computer Science at UGA, Software Engineer Intern at The Voleon Group and ADP, ICPC World Finalist." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #050810;
+      --bg2:       #090d1a;
+      --surface:   rgba(255,255,255,0.04);
+      --border:    rgba(255,255,255,0.08);
+      --primary:   #3B82F6;
+      --primary-g: #2563EB;
+      --accent:    #8B5CF6;
+      --orange:    #F97316;
+      --text:      #F1F5F9;
+      --muted:     #94A3B8;
+      --dim:       #475569;
+      --glow:      rgba(59,130,246,0.3);
+      --radius:    16px;
+      --transition: 200ms ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 16px;
+      overflow-x: hidden;
+    }
+
+    /* ── Background mesh ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(59,130,246,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 90% 20%, rgba(139,92,246,0.1) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 50% 100%, rgba(37,99,235,0.08) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg2); }
+    ::-webkit-scrollbar-thumb { background: var(--primary-g); border-radius: 4px; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      height: 64px;
+      background: rgba(5,8,16,0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--primary); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      padding: 8px 20px;
+      background: var(--primary);
+      color: #fff !important;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      transition: opacity var(--transition) !important;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── Container ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 5%;
+      position: relative;
+      z-index: 1;
+    }
+
+    section { padding: 100px 0; }
+
+    /* ── Hero ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 64px;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(59,130,246,0.12);
+      border: 1px solid rgba(59,130,246,0.25);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .status-dot {
+      width: 7px; height: 7px;
+      background: #22C55E;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(1.4); }
+    }
+
+    .hero-name {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 1rem;
+    }
+
+    .hero-name .gradient {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 60%, var(--orange) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-title {
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      color: var(--muted);
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+      max-width: 560px;
+    }
+
+    .hero-title strong { color: var(--text); font-weight: 600; }
+
+    .hero-location {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.875rem;
+      color: var(--dim);
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-g), var(--primary));
+      color: #fff;
+      box-shadow: 0 4px 24px var(--glow);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px var(--glow); }
+
+    .btn-ghost {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+
+    /* Avatar */
+    .hero-avatar {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      flex-shrink: 0;
+    }
+
+    .avatar-ring {
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent), var(--orange));
+      animation: spin 8s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .avatar-inner {
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.05em;
+      overflow: hidden;
+    }
+
+    /* ── Section headers ── */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--primary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--primary);
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 500px;
+      margin-bottom: 3rem;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: all 300ms ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .card:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(59,130,246,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(59,130,246,0.12);
+    }
+
+    /* ── Experience ── */
+    .experience-grid { display: grid; gap: 1.5rem; }
+
+    .exp-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .exp-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .exp-company {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .exp-role {
+      font-size: 0.9rem;
+      color: var(--primary);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .exp-meta {
+      display: flex;
+      gap: 12px;
+      font-size: 0.8rem;
+      color: var(--dim);
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .exp-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 10px;
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 100px;
+      font-size: 0.75rem;
+      color: var(--primary);
+    }
+
+    .exp-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    .exp-desc li { margin-left: 1.2rem; margin-bottom: 4px; }
+
+    .skills-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 1rem;
+    }
+
+    .chip {
+      padding: 4px 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--muted);
+    }
+
+    /* ── Education ── */
+    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+    .edu-card .degree {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+
+    .edu-card .school {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .edu-card .field {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .edu-card .year {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--dim);
+    }
+
+    /* ── Skills ── */
+    .skills-section .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-group-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--dim);
+      margin-bottom: 1rem;
+    }
+
+    .skill-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 4px;
+      transition: all var(--transition);
+    }
+
+    .skill-pill:hover {
+      background: rgba(59,130,246,0.1);
+      border-color: rgba(59,130,246,0.3);
+      color: var(--primary);
+    }
+
+    /* ── Award ── */
+    .award-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
+    .award-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(251,191,36,0.2), rgba(249,115,22,0.2));
+      border: 1px solid rgba(251,191,36,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      flex-shrink: 0;
+    }
+
+    .award-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .award-sub {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .award-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--dim);
+    }
+
+    /* ── Stats row ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin: 4rem 0;
+    }
+
+    .stat-card {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── Contact ── */
+    #contact .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all var(--transition);
+    }
+
+    .contact-link:hover .contact-icon { background: rgba(59,130,246,0.2); border-color: rgba(59,130,246,0.4); }
+    .contact-link:hover .contact-text { color: var(--primary); }
+
+    .contact-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all var(--transition);
+    }
+
+    .contact-text { font-size: 0.9rem; font-weight: 500; transition: color var(--transition); }
+    .contact-hint { font-size: 0.78rem; color: var(--dim); }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 3rem 5%;
+      border-top: 1px solid var(--border);
+      color: var(--dim);
+      font-size: 0.8rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer a { color: var(--primary); text-decoration: none; }
+
+    /* ── Divider ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border) 30%, var(--border) 70%, transparent);
+      margin: 0 5%;
+    }
+
+    /* ── Open to work banner ── */
+    .open-to-work {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.25);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      color: #22C55E;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .hero-avatar { display: none; }
+      .hero-location { justify-content: center; }
+      .hero-buttons { justify-content: center; }
+      .edu-grid { grid-template-columns: 1fr; }
+      #contact .contact-grid { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr; }
+      .exp-card { grid-template-columns: 1fr; }
+      .exp-logo { display: none; }
+      nav { padding: 0 4%; }
+      .nav-links { gap: 1rem; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-links .hide-sm { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav role="navigation" aria-label="Main navigation">
+    <a href="#hero" class="nav-logo">RM<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education" class="hide-sm">Education</a></li>
+      <li><a href="#skills" class="hide-sm">Skills</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div>
+          <div class="open-to-work">
+            <span class="status-dot" aria-hidden="true"></span>
+            Open to Work
+          </div>
+          <div class="hero-badge" aria-label="Current status">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            PhD Candidate · UGA, Athens GA
+          </div>
+
+          <h1 class="hero-name">
+            Rezwan<br/><span class="gradient">Mahmud</span>
+          </h1>
+
+          <p class="hero-title">
+            <strong>Software Engineer</strong> &amp; <strong>Researcher</strong> — building scalable systems and ML pipelines.
+            Ex-intern at <strong>Voleon</strong> &amp; <strong>ADP</strong>. ICPC World Finalist.
+          </p>
+
+          <div class="hero-location" aria-label="Location">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Athens, Georgia, United States
+          </div>
+
+          <div class="hero-buttons">
+            <a href="https://www.linkedin.com/in/rezwan-mahmud-22374917a/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" aria-label="View LinkedIn profile">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+            <a href="#contact" class="btn btn-ghost">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              Get in touch
+            </a>
+          </div>
+        </div>
+
+        <!-- Avatar -->
+        <div class="hero-avatar" role="img" aria-label="Rezwan Mahmud avatar">
+          <div class="avatar-ring" aria-hidden="true"></div>
+          <div class="avatar-inner" aria-hidden="true">RM</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="container">
+    <div class="stats-row">
+      <div class="card stat-card">
+        <div class="stat-value">2</div>
+        <div class="stat-label">SWE Internships</div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-value">50k+</div>
+        <div class="stat-label">Teams beaten at ICPC</div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-value">200M+</div>
+        <div class="stat-label">Data points handled @ ADP</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Experience -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-label">Career</div>
+      <h2 class="section-title">Experience</h2>
+      <p class="section-sub">Internships at industry-leading companies building real-world systems.</p>
+
+      <div class="experience-grid">
+
+        <!-- Voleon -->
+        <div class="card exp-card">
+          <div class="exp-logo" aria-hidden="true">
+            <!-- Voleon abstract icon -->
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+              <rect width="28" height="28" rx="8" fill="rgba(59,130,246,0.15)"/>
+              <path d="M6 10 L14 18 L22 10" stroke="#3B82F6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <circle cx="14" cy="18" r="2" fill="#3B82F6"/>
+            </svg>
+          </div>
+          <div>
+            <div class="exp-company">The Voleon Group</div>
+            <div class="exp-role">Software Engineer Intern</div>
+            <div class="exp-meta">
+              <span>May 2025 – Aug 2025</span>
+              <span>·</span>
+              <span>Berkeley, CA · On-site</span>
+              <span class="exp-tag">Internship</span>
+            </div>
+            <ul class="exp-desc">
+              <li>Sourcing and ingesting data from vendors, handling ETL processes</li>
+              <li>Ensuring data availability and integrity for trading operations</li>
+            </ul>
+            <div class="skills-chips">
+              <span class="chip">Python</span>
+              <span class="chip">Airflow</span>
+              <span class="chip">ETL</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ADP -->
+        <div class="card exp-card">
+          <div class="exp-logo" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+              <rect width="28" height="28" rx="8" fill="rgba(139,92,246,0.15)"/>
+              <rect x="6" y="8" width="6" height="12" rx="2" fill="#8B5CF6"/>
+              <rect x="15" y="11" width="6" height="9" rx="2" fill="#8B5CF6" opacity="0.6"/>
+            </svg>
+          </div>
+          <div>
+            <div class="exp-company">ADP</div>
+            <div class="exp-role">Software Engineer Intern</div>
+            <div class="exp-meta">
+              <span>May 2023 – Aug 2023</span>
+              <span>·</span>
+              <span>Alpharetta, GA · Hybrid</span>
+              <span class="exp-tag">Internship</span>
+            </div>
+            <ul class="exp-desc">
+              <li>Delivered a data analytics solution for <strong>200 million+</strong> time-series data points</li>
+              <li>Developed an automated deployment pipeline for daily advanced analytics serving <strong>100,000+ clients</strong></li>
+            </ul>
+            <div class="skills-chips">
+              <span class="chip">SQL</span>
+              <span class="chip">DBMS</span>
+              <span class="chip">Data Analytics</span>
+              <span class="chip">Pipelines</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Education -->
+  <section id="education">
+    <div class="container">
+      <div class="section-label">Academic</div>
+      <h2 class="section-title">Education</h2>
+      <p class="section-sub">Strong foundations from top institutions across two continents.</p>
+
+      <div class="edu-grid">
+
+        <div class="card edu-card">
+          <div class="degree">Doctor of Philosophy</div>
+          <div class="school">University of Georgia</div>
+          <div class="field">Computer Science</div>
+          <div class="year">Aug 2021 – Aug 2026</div>
+          <div class="skills-chips" style="margin-top:1rem;">
+            <span class="chip">Computer Vision</span>
+            <span class="chip">Deep Learning</span>
+            <span class="chip">Machine Learning</span>
+          </div>
+        </div>
+
+        <div class="card edu-card">
+          <div class="degree">Bachelor of Science</div>
+          <div class="school">University of Dhaka</div>
+          <div class="field">Computer Science</div>
+          <div class="year">2014 – 2018</div>
+          <div class="skills-chips" style="margin-top:1rem;">
+            <span class="chip">Algorithms</span>
+            <span class="chip">Competitive Programming</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Skills -->
+  <section id="skills" class="skills-section">
+    <div class="container">
+      <div class="section-label">Expertise</div>
+      <h2 class="section-title">Skills</h2>
+      <p class="section-sub">A versatile stack spanning ML research, data engineering, and backend development.</p>
+
+      <div class="skills-grid">
+        <div class="card">
+          <div class="skill-group-title">Languages &amp; Frameworks</div>
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">SQL</span>
+          <span class="skill-pill">LangGraph</span>
+        </div>
+        <div class="card">
+          <div class="skill-group-title">Data &amp; MLOps</div>
+          <span class="skill-pill">Airflow</span>
+          <span class="skill-pill">ETL Pipelines</span>
+          <span class="skill-pill">DBMS</span>
+        </div>
+        <div class="card">
+          <div class="skill-group-title">Research Areas</div>
+          <span class="skill-pill">Computer Vision</span>
+          <span class="skill-pill">Deep Learning</span>
+          <span class="skill-pill">Machine Learning</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Awards -->
+  <section id="awards">
+    <div class="container">
+      <div class="section-label">Recognition</div>
+      <h2 class="section-title">Honors &amp; Awards</h2>
+      <p class="section-sub">Competing at the highest level on the global stage.</p>
+
+      <div class="card award-card">
+        <div class="award-icon" role="img" aria-label="Trophy">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+        </div>
+        <div>
+          <div class="award-title">ICPC World Finalist 2017</div>
+          <div class="award-sub">
+            Recognized among the top competitive programmers globally, selected from over <strong>50,000+ teams</strong> worldwide. Associated with University of Dhaka.
+          </div>
+          <div class="award-date">May 2017</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-label">Let's Connect</div>
+      <h2 class="section-title">Get In Touch</h2>
+      <p class="section-sub">Open to SWE, ML engineering, optimization, and data science roles — internships and full-time.</p>
+
+      <div class="contact-grid">
+
+        <a href="https://www.linkedin.com/in/rezwan-mahmud-22374917a/" target="_blank" rel="noopener noreferrer" class="card contact-link" aria-label="Visit LinkedIn profile">
+          <div class="contact-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#3B82F6" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </div>
+          <div>
+            <div class="contact-text">LinkedIn</div>
+            <div class="contact-hint">linkedin.com/in/rezwan-mahmud-22374917a</div>
+          </div>
+        </a>
+
+        <div class="card contact-link" style="cursor:default;">
+          <div class="contact-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="contact-text">Location</div>
+            <div class="contact-hint">Athens, Georgia, United States</div>
+          </div>
+        </div>
+
+        <div class="card contact-link" style="cursor:default;">
+          <div class="contact-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <div>
+            <div class="contact-text">Institution</div>
+            <div class="contact-hint">University of Georgia · PhD CS</div>
+          </div>
+        </div>
+
+        <div class="card contact-link" style="cursor:default;">
+          <div class="contact-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+          </div>
+          <div>
+            <div class="contact-text">Status</div>
+            <div class="contact-hint">Open to internships &amp; full-time offers</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      &copy; 2026 Rezwan Mahmud &mdash; Built with care &middot;
+      <a href="https://www.linkedin.com/in/rezwan-mahmud-22374917a/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </p>
+  </footer>
+
+</body>
+</html>
